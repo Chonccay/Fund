@@ -56,7 +56,7 @@ def getData(fscode):
 num=0
 FundDataFile= open('data.csv','w')
 csvwriter = csv.writer(FundDataFile);
-csvwriter.writerow(["基金代码", "基金类型","近七个交易日收益","近一月收益", "近三月收益", "近六月收益", "近一年收益","连涨/跌天数"])
+csvwriter.writerow(["基金代码", "基金类型","近七个交易日收益","近一月收益", "近三月收益", "近六月收益", "近一年收益","连涨/跌天数","基金链接"])
 
 mylock=threading.Lock()
 def RunFundData():
@@ -90,7 +90,7 @@ def RunFundData():
         maxx = rise if abs(rise) > abs(dice) else dice
         try:
             mylock.acquire();
-            csvwriter.writerow([name + '(' + str(code.zfill(6)) + ')', type, str(WeekSyl) + '%', OMonthSyl + '%', TMonthSyl + '%',SMonthSyl + '%', YearSyl + '%', str(maxx)])
+            csvwriter.writerow([name + '(' + str(code.zfill(6)) + ')', type, str(WeekSyl) + '%', OMonthSyl + '%', TMonthSyl + '%',SMonthSyl + '%', YearSyl + '%', str(maxx),"http://fund.eastmoney.com/"+str(code.zfill(6))+".html"])
         finally:
             mylock.release()
         print("write " + code + "'s data success.")
